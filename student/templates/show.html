@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+  <link
+    href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css"
+    rel="stylesheet"
+    integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor"
+    crossorigin="anonymous"
+  />
+  <head>
+    <meta charset="UTF-8" />
+    <title>Student Records</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'style.css' %}" />
+  </head>
+
+  <style>
+    table {
+      border: 8px outset;
+      border-radius: 10px;
+      border-spacing: 10px;
+      padding: 20px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    th,
+    td {
+      padding: 5px;
+      border: 1px solid;
+    }
+  </style>
+  <body style="background-color: gainsboro">
+    <h2 style="text-align: center">Student Information</h2>
+    <center>
+      <table class="table table-dark table-striped">
+        <thead class="thead-dark">
+          <tr>
+            <th>Student ID</th>
+            <th>Student Name</th>
+            <th>Student Email</th>
+            <th>Student Contact</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for student in students %}
+          <tr>
+            <td>{{ student.sid }}</td>
+            <td>{{ student.sname }}</td>
+            <td>{{ student.semail }}</td>
+            <td>{{ student.scontact }}</td>
+            <td>
+              <center>
+                <a href="/edit/{{ student.id }}"
+                  ><button type="button" class="btn btn-primary">
+                    Edit
+                  </button></a
+                >
+                <a href="/delete/{{ student.id }}"
+                  ><button type="button" class="btn btn-danger">
+                    Delete
+                  </button></a
+                >
+              </center>
+            </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </center>
+    <br />
+    <br />
+    {% if user.is_authenticated %}
+    <center><a href="/emp" class="btn btn-primary">Add New Record</a></center>
+    {% else %}
+    <div class="alert alert-warning alert-dismissible fade show" role="alert">
+      <p style="color: red">You need to login First</p>
+    </div>
+    <center><a href="/emp" class="btn btn-primary">Add New Record</a></center>
+    {% endif %}
+  </body>
+</html>
